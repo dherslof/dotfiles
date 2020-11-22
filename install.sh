@@ -5,10 +5,10 @@
 #                   dotfiles, environment tools and programs.
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Global variables
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SCRIPT_VERSION="1.0.0"
 
 # Directories
 HOME_PATH="/home/${USER}"
@@ -21,7 +21,7 @@ VIM_RC=".vimrc"
 ZSH_RC=".zshrc"
 TMUX_CONF=".tmux.conf"
 STARSHIP_TOML="starship.toml"
-STARSHIP_TOML_PATH="$HOME_PATH/.config/"
+CONFIG_PATH=".config/"
 
 # Todo: add shellcheck...
 # Programs
@@ -55,7 +55,6 @@ Usage: [hVvtcz]
 -z   Setup zsh
 -t   Setup tmux
 -c   Setup cargo
--e   [TODO] Setup env (powerline etc.)
 
 -V   Show script version
 -h   Print this help
@@ -103,7 +102,6 @@ verify_prerequisites()
 # Function for verifying installation of program
 program_installed()
 {
-   echo "DEV - programming installed function"
    if [ ! command -v $1 &> /dev/null ]; then
       note_print "Didn't find $1, probably not installed"
       read -p "Do you want to install? [Y/n]: " -n 1 -r
@@ -181,7 +179,7 @@ store_existing_file()
 # Function for setting up vim
 setup_vim()
 {
-   echo "dev - setting up vim func"
+   note_print "Setting up vim"
    program_installed $VIM
    store_existing_file $VIM_RC
    install_config $VIM_RC
@@ -205,6 +203,8 @@ setup_vim()
 # Fucntion for setting up tmux
 setup_tmux()
 {
+   note_print "Setting up tmux"
+
    program_installed $TMUX
    store_existing_file $TMUX_CONF
    install_config $TMUX_CONF
@@ -219,6 +219,8 @@ setup_tmux()
          error_print "Clone of tmux plugin manager returned: $clone_status, tpm is needed for tmux plugins!"
       fi
    fi
+
+   success_print "tmux setup done!"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -226,6 +228,8 @@ setup_tmux()
 # Fucntion for setting up cargo tools
 setup_cargo()
 {
+   note_print "Setting up cargo"
+
    if [ ! command -v cargo &> /dev/null ]; then
       note_print "Didn't find cargo, probably not installed"
       read -p "Do you want to install cargo? [Y/n]: " -n 1 -r
@@ -250,10 +254,12 @@ setup_cargo()
       local t_installed=`cargo install --list | grep $t`
 
       case $t_installed in
-         *"$t"*)  note_print "$t is already installed: $t_installed"
+         *"$t"*)
+            note_print "$t is already installed: $t_installed"
             continue
             ;;
-         *) echo -e "$t Installing..."
+         *)
+            echo -e "$t Installing..."
             local install_tool=`cargo install $t`
             local install_status=$?
             if [ $install_status == 0 ]; then
@@ -270,44 +276,76 @@ setup_cargo()
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Function for setting up zsh
+setup_zsh()
+{
+   note_print "Setting up ZSH"
+
+   program_installed "$ZSH"
+   check_existing "$ZSH_RC"
+   install_file "$ZSH_RC"
+
+   # Verify starship
+   if [ ! command -v starship &> /dev/null ]; then
+      note_print "Could not find starship - probably not installed, this will effect the zsh experience!" && return
+   fi
+
+   success_print "Found startship! Setting up configuration"
+
+   local starship_conf=$CONFIG_PATH$STARSHIP_TOML
+   check_existing "$starship_conf"
+   install_file "$starship_conf"
+
+   success_print "ZSH with startship setup done"
+}
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Main
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 verify_prerequisites
 
-while getopts 'hVvtc' OPT; do
+while getopts 'hVvtcz' OPT; do
    case $OPT in
       v)
          FULL_ENV=false
          setup_vim
-         echo "install vim flag"
          ;;
 
       t)
          FULL_ENV=false
          setup_tmux
-         echo "install tmux flag"
          ;;
 
       c)
          FULL_ENV=false
-         echo "install cargo flag"
          setup_cargo "${CARGO_TOOLS_LIST[@]}"
+         ;;
+
+      z)
+         FULL_ENV=false
+         setup_zsh
          ;;
 
       h)
          usage
-         exit
+         exit 0
+         ;;
+
+      V)
+         echo "$0 - version: $SCRIPT_VERSION"
+         exit 0
          ;;
 
       \?)
          usage
-         exit
+         exit 0
          ;;
 
       *)
          usage
-         exit
+         exit 0
          ;;
    esac
 done
@@ -321,6 +359,13 @@ read -p "You are about to run a full environment setup, continue? [Y/n]: " -n 1 
 if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
    echo " "
    success_print "Setting upp environment!"
+   setup_vim
+   setup_tmux
+   setup_cargo
+   setup_zsh
+
+   success_print "All done - Don't forget to run apt update + apt upgrade to be fully updated"
+
 else
    echo " "
    note_print "Aborting"
