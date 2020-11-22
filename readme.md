@@ -1,10 +1,10 @@
 # dotfiles
 
 ### Description
-Repository for keeping track of some of my personal ((@herslof)[https://github.com/dherslof]) basic dotfiles and well used tools. 
+Repository for keeping track of some of my personal ([@herslof](https://github.com/dherslof])) basic dotfiles and well used tools. 
 
-**
-**Note**: The install Script are hard coded for Ubuntu (debian) - uses `apt` for package installation 
+
+**Note:** The `install script` are hard coded for Ubuntu (debian) - uses `apt` for package installation 
 
 ### Contains 
 * vimrc
