@@ -1,17 +1,21 @@
 # dotfiles
 
 ### Description
-Repository for keeping track of some of my personal(@dherslof) basic dotfiles and well used tools. 
+Repository for keeping track of some of my personal ([@herslof](https://github.com/dherslof])) basic dotfiles and well used tools. 
+
+
+**Note:** The `install script` are hard coded for Ubuntu (debian) - uses `apt` for package installation 
 
 ### Contains 
 * vimrc
 * tmux config
 * cargo tools list
+* zsh
 
 ### Installation and usage
 Clone the repository.
 ```bash
-git clone <github path>
+git clone <github_path>
 ```
 
 Run the installation script. 
@@ -30,6 +34,6 @@ In alternative to run the above installation script, is to  manually move/link t
 ### Todos
 In the future, it would be nice to add some more features in install script! (Today this needs to be done manually)
 * [powerline](https://github.com/powerline/powerline)
-* zsh
+* [shellcheck](https://github.com/koalaman/shellcheck)
 
 
