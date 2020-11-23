@@ -4,7 +4,7 @@
 Repository for keeping track of some of my personal ([@dherslof](https://github.com/dherslof])) basic dotfiles and well used tools. 
 
 
-**Note:** The `install script` are hard coded for Ubuntu (debian) - uses `apt` for package installation 
+**Note:** The `install script` is hard coded for Ubuntu (debian) - uses `apt` for package installation 
 
 ### Contains 
 * vimrc
@@ -24,7 +24,7 @@ $ cd dotfiles
 $ ./install.sh
 ```
 
-Only install tmux_conf:
+Only setup tmux:
 ```bash 
 $ ./install.sh -t
 ```
