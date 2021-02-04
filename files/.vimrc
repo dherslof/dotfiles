@@ -10,21 +10,27 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" indentation
+" indentation https://github.com/Yggdroot/indentLine
 Plugin 'Yggdroot/indentLine'
 let g:indentLine_color_term = 239
 
 " Color theme
 Plugin 'dracula/vim', { 'name': 'dracula' }
 
-" Auto completion
+" Auto completion https://www.tabnine.com/
 Plugin 'zxqfl/tabnine-vim'
 
-" fs help
+"Linter and more: https://github.com/dense-analysis/ale
+"Plugin 'dense-analysis/ale'
+
+" fs help https://github.com/preservim/nerdtree
 Plugin 'preservim/nerdtree'
 
 " highlight brackets etc.
 Plugin 'frazrepo/vim-rainbow'
+
+" git changes higligts etc. https://github.com/airblade/vim-gitgutter
+Plugin 'airblade/vim-gitgutter'
 
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " extra c++ options
@@ -58,6 +64,8 @@ set showmode
 
 " a tab is n spaces
 set tabstop=3
+" use space instead of tabs
+set expandtab
 
 " always set autoindenting on
 set autoindent
