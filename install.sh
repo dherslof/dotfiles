@@ -23,13 +23,13 @@ TMUX_CONF=".tmux.conf"
 STARSHIP_TOML="starship.toml"
 CONFIG_PATH=".config/"
 
-# Todo: add shellcheck...
 # Programs
 VIM="vim"
 TMUX="tmux"
 ZSH="zsh"
 CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship")
-PREREQUISITES=("curl" "git" "clang")
+PREREQUISITES=("curl" "git" "clang" "pkg-config")
+EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle")
 
 # Flags
 FULL_ENV=true
@@ -55,6 +55,7 @@ Usage: [hVvtcz]
 -z   Setup zsh
 -t   Setup tmux
 -c   Setup cargo
+-e   Setup extra 'apt' tools
 
 -V   Show script version
 -h   Print this help
@@ -90,9 +91,32 @@ success_print()
 verify_prerequisites()
 {
    for e in "${PREREQUISITES[@]}"; do
-      if [ ! command -v $e &> /dev/null ]; then
-         echo "'$e' could not be found, please run: $ sudo apt install $e"
+      #if [ ! command -v $e &> /dev/null ]; then
+      local bin_path=`$e`
+      if [ -z $bin_path ]; then
+         echo "'$e' could not be found, please run: $ sudo apt install $e, or this script with the '-p' flag"
          exit 1
+      fi
+   done
+}
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Function for installing prerequisites
+apt_install()
+{
+   local list=("$@")
+   for e in "${list[@]}"; do
+      note_print "Fetching: $e"
+
+      local bin_path=`which $e`
+      if [ -z $bin_path ]; then
+         sudo apt install $e
+      fi
+
+      bin_path=`which $e`
+      if [ -z $bin_path ]; then
+         error_print "Unable to install: $e, please install manually!"
       fi
    done
 }
@@ -102,7 +126,9 @@ verify_prerequisites()
 # Function for verifying installation of program
 program_installed()
 {
-   if [ ! command -v $1 &> /dev/null ]; then
+   local bin_path=`$which $1`
+   #if [ ! command -v $1 &> /dev/null ]; then
+   if [ -z $bin_path ]; then
       note_print "Didn't find $1, probably not installed"
       read -p "Do you want to install? [Y/n]: " -n 1 -r
       if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
@@ -142,7 +168,13 @@ install_config()
       error_print "ABORTING - Unable to find file: $1 in: $FILES_DIR" && exit 1
    fi
 
-   local link_cmd=$(ln -s $new_conf_file $HOME_PATH/$1)
+   local link_cmd
+   if [ -z "$2" ]; then
+      link_cmd=$(ln -s $new_conf_file $HOME_PATH/$1)
+   else
+      link_cmd=$(ln -s $new_conf_file $HOME_PATH/$2$1)
+   fi
+
    local cmd_status=$?
 
    if [ ! $cmd_status == 0 ]; then
@@ -160,7 +192,6 @@ store_existing_file()
    local existing_file="$HOME_PATH/$1"
 
    if [ -f "$existing_file" ]; then
-
       local file_type=`file $existing_file`
       if [[ $file_type == *"symbolic link"* ]];then
          success_print "Symbolic link already exists($file_type). If path not correct, move manually"
@@ -225,29 +256,31 @@ setup_tmux()
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Fucntion for setting up cargo tools
+# Function for setting up cargo tools
 setup_cargo()
 {
    note_print "Setting up cargo"
-
-   if [ ! command -v cargo &> /dev/null ]; then
+   local cargo_bin=`which cargo`
+   if [ -z $cargo_bin ]; then
+   #if [ ! command -v cargo &> /dev/null ]; then
       note_print "Didn't find cargo, probably not installed"
       read -p "Do you want to install cargo? [Y/n]: " -n 1 -r
       if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
          curl https://sh.rustup.rs -sSf | sh
-         local cargo_installation_status=$?
-         if [ $cargo_installation_status == 0 ];then
-            success_print "Cargo script returned successful, trying to source env!"
+            note_print "Trying to source env!"
             source $HOME/.cargo/env || { error_print "ABORTING - Unable to source cargo environment"; exit 1; }
-         else
-            error_print "ABORTING - Failed to install cargo" && exit 1
-         fi
       else
          error_print "Unable to install cargo-based tools without cargo..." && return
       fi
    fi
 
-   success_print "Cargo found - installing cargo programs"
+   success_print "Cargo found - Updating"
+   rustup update
+   if [ ! $? == 0 ]; then
+      error_print "Cargo update failed, this may lead to failed installation of rust programs"
+   fi
+
+   success_print "Installing cargo programs"
 
    local tools=("$@")
    for t in "${tools[@]}"; do
@@ -263,7 +296,7 @@ setup_cargo()
             local install_tool=`cargo install $t`
             local install_status=$?
             if [ $install_status == 0 ]; then
-               success_print "Successfully installed $t"
+               success_print "Successfully handled installation, check cargo log for status $t"
             else
                error_print "Failed to install $t"
                continue
@@ -283,19 +316,21 @@ setup_zsh()
    note_print "Setting up ZSH"
 
    program_installed "$ZSH"
-   check_existing "$ZSH_RC"
-   install_file "$ZSH_RC"
+   store_existing_file "$ZSH_RC"
+   install_config "$ZSH_RC"
 
    # Verify starship
-   if [ ! command -v starship &> /dev/null ]; then
+   #if [ ! command -v starship &> /dev/null ]; then
+   local starship_path=`which startship`
+   if [ -z $starship_path ]; then
       note_print "Could not find starship - probably not installed, this will effect the zsh experience!" && return
    fi
 
    success_print "Found startship! Setting up configuration"
 
    local starship_conf=$CONFIG_PATH$STARSHIP_TOML
-   check_existing "$starship_conf"
-   install_file "$starship_conf"
+   store_existing_file "$starship_conf"
+   install_config "$STARSHIP_TOML" "$CONFIG_PATH"
 
    success_print "ZSH with startship setup done"
 }
@@ -306,7 +341,7 @@ setup_zsh()
 
 verify_prerequisites
 
-while getopts 'hVvtcz' OPT; do
+while getopts 'hVvtczpe' OPT; do
    case $OPT in
       v)
          FULL_ENV=false
@@ -328,6 +363,13 @@ while getopts 'hVvtcz' OPT; do
          setup_zsh
          ;;
 
+      p)
+         FULL_ENV=false
+         apt_install "${PREREQUISITES[@]}"
+         ;;
+      e)
+         FULL_ENV=false
+         apt_install "${EXTRA_LIST[@]}"
       h)
          usage
          exit 0
