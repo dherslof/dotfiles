@@ -29,7 +29,7 @@ TMUX="tmux"
 ZSH="zsh"
 CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship")
 PREREQUISITES=("curl" "git" "clang" "pkg-config")
-EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle")
+EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk")
 
 # Flags
 FULL_ENV=true
@@ -56,6 +56,8 @@ Usage: [hVvtcz]
 -t   Setup tmux
 -c   Setup cargo
 -e   Setup extra 'apt' tools
+-p   Setup prerequisites
+
 
 -V   Show script version
 -h   Print this help
@@ -126,7 +128,7 @@ apt_install()
 # Function for verifying installation of program
 program_installed()
 {
-   local bin_path=`$which $1`
+   local bin_path=`which $1`
    #if [ ! command -v $1 &> /dev/null ]; then
    if [ -z $bin_path ]; then
       note_print "Didn't find $1, probably not installed"
@@ -169,19 +171,21 @@ install_config()
    fi
 
    local link_cmd
+   local link_path
    if [ -z "$2" ]; then
-      link_cmd=$(ln -s $new_conf_file $HOME_PATH/$1)
+      link_path=$HOME_PATH/$1
    else
-      link_cmd=$(ln -s $new_conf_file $HOME_PATH/$2$1)
+      link_path=$HOME_PATH/$2$1
    fi
 
+   test -h $link_path || link_cmd=$(ln -s $new_conf_file $link_path) && note_print "Not recreating symbolic link: $new_conf_file"
    local cmd_status=$?
 
    if [ ! $cmd_status == 0 ]; then
       error_print "ABORTING - Failed to create: $HOME_PATH/$1" && exit 1
    fi
 
-   success_print "Created: $HOME_PATH/$1"
+   success_print "Created: $link_path"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -226,7 +230,7 @@ setup_vim()
       fi
    fi
 
-   success_print "Vim setup done!"
+   success_print "Vim setup done! Launch VIM and run ':PluginInstall' to fetch plugins!"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -251,7 +255,7 @@ setup_tmux()
       fi
    fi
 
-   success_print "tmux setup done!"
+   success_print "tmux setup done! Run 'prefix + I' to fetch plugins!"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -321,12 +325,12 @@ setup_zsh()
 
    # Verify starship
    #if [ ! command -v starship &> /dev/null ]; then
-   local starship_path=`which startship`
+   local starship_path=`which starship`
    if [ -z $starship_path ]; then
       note_print "Could not find starship - probably not installed, this will effect the zsh experience!" && return
    fi
 
-   success_print "Found startship! Setting up configuration"
+   success_print "Found starship! Setting up configuration"
 
    local starship_conf=$CONFIG_PATH$STARSHIP_TOML
    store_existing_file "$starship_conf"
@@ -370,6 +374,7 @@ while getopts 'hVvtczpe' OPT; do
       e)
          FULL_ENV=false
          apt_install "${EXTRA_LIST[@]}"
+         ;;
       h)
          usage
          exit 0
@@ -406,7 +411,7 @@ if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
    setup_cargo
    setup_zsh
 
-   success_print "All done - Don't forget to run apt update + apt upgrade to be fully updated"
+   success_print "All done - Don't forget to run apt update + apt upgrade to be fully updated. Also remember that some configuration parameters might be dependent on a local path, which might need update!"
 
 else
    echo " "
