@@ -230,7 +230,7 @@ setup_vim()
       fi
    fi
 
-   success_print "Vim setup done!"
+   success_print "Vim setup done! Launch VIM and run ':PluginInstall' to fetch plugins!"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -255,7 +255,7 @@ setup_tmux()
       fi
    fi
 
-   success_print "tmux setup done!"
+   success_print "tmux setup done! Run 'prefix + I' to fetch plugins!"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -411,7 +411,7 @@ if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
    setup_cargo
    setup_zsh
 
-   success_print "All done - Don't forget to run apt update + apt upgrade to be fully updated"
+   success_print "All done - Don't forget to run apt update + apt upgrade to be fully updated. Also remember that some configuration parameters might be dependent on a local path, which might need update!"
 
 else
    echo " "
