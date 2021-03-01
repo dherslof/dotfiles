@@ -1,0 +1,45 @@
+Extensions:
+- Arduino
+- atom one dark theme
+- auto correct
+- bash IDE
+- better commands
+- bitbake
+- bracket pair colorizer
+- c/c++
+- c/c++ clang command adapter
+- c/c++ makefile project
+- c/c++ project
+- c/c++ algorithm mnemonics
+- cmake
+- cmake tools
+- cmake format
+- code spell checker
+- DeviceTree
+- Doxygen Documentation generator
+- git blame
+- git history
+- gitlens
+- indent-rainbow
+- markdown all in one
+- python
+- remote development
+- rust
+- rust assist
+- tabnine
+- snippetica for markodwn
+- trailing whitespace highlighter
+- vscode-icons
+
+Settings snippets: 
+"editor.tabSize": 3,
+"editor.formatOnPaste": true,
+"editor.rulers": [80],
+"editor.tabCompletion": "on",
+"editor.fontSize": 12,
+"editor.smoothScrolling": true,
+"editor.autoClosingBrackets": "always",
+"editor.detectIndentation": true,
+"files.trimFinalNewlines": true,
+"files.trimTrailingWhitespace": true,
+
