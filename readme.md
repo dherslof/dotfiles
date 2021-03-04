@@ -39,6 +39,4 @@ In alternative to run the above installation script, is to  manually move/link t
 ### Todos
 In the future, it would be nice to add some more features in install script! (Today this needs to be done manually)
 * [powerline](https://github.com/powerline/powerline)
-* [shellcheck](https://github.com/koalaman/shellcheck)
-
 

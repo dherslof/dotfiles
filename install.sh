@@ -29,7 +29,7 @@ TMUX="tmux"
 ZSH="zsh"
 CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship")
 PREREQUISITES=("curl" "git" "clang" "pkg-config")
-EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk")
+EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom")
 
 # Flags
 FULL_ENV=true
