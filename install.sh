@@ -40,6 +40,8 @@ GREEN='\e[32m'
 YELLOW="\e[93m"
 NC='\e[0m'
 
+#TODO: add pip install func (pip3 install --user advance-touch)
+
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Support functions
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
