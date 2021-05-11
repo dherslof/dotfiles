@@ -42,6 +42,9 @@ eval "$(starship init zsh)"
 # gt (goto) indexed directories
 eval "$(goto-rs init)"
 
+# Alias for 'thefuck helper tool 
+eval "$(thefuck --alias tfk)"
+
 # Alias for exa (replacement for ls)
 alias lf='exa -alF'
 alias lft='exa -alFT'
