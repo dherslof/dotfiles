@@ -29,7 +29,7 @@ TMUX="tmux"
 ZSH="zsh"
 CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship")
 PREREQUISITES=("curl" "git" "clang" "pkg-config")
-EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress")
+EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop")
 
 # Flags
 FULL_ENV=true
@@ -97,7 +97,7 @@ verify_prerequisites()
 {
    for e in "${PREREQUISITES[@]}"; do
       #if [ ! command -v $e &> /dev/null ]; then
-      local bin_path=`$e`
+      local bin_path=`which $e`
       if [ -z $bin_path ]; then
          echo "'$e' could not be found, please run: $ sudo apt install $e, or this script with the '-p' flag"
          exit 1
