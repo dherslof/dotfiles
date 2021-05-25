@@ -97,7 +97,7 @@ verify_prerequisites()
 {
    for e in "${PREREQUISITES[@]}"; do
       #if [ ! command -v $e &> /dev/null ]; then
-      local bin_path=`$e`
+      local bin_path=`which $e`
       if [ -z $bin_path ]; then
          echo "'$e' could not be found, please run: $ sudo apt install $e, or this script with the '-p' flag"
          exit 1
