@@ -33,6 +33,15 @@ Plugin 'frazrepo/vim-rainbow'
 Plugin 'airblade/vim-gitgutter'
 
 Plugin 'octol/vim-cpp-enhanced-highlight'
+
+" git blame - leader = \ => \+b  -https://github.com/zivyangll/git-blame.vim
+Plugin 'zivyangll/git-blame.vim'
+nnoremap <Leader>b :<C-u>call gitblame#echo()<CR>
+
+" git extra - https://github.com/jreybert/vimagit
+":Magit
+Plugin 'jreybert/vimagit'
+
 " extra c++ options
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
