@@ -27,9 +27,9 @@ CONFIG_PATH=".config/"
 VIM="vim"
 TMUX="tmux"
 ZSH="zsh"
-CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship")
+CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli")
 PREREQUISITES=("curl" "git" "clang" "pkg-config")
-EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop")
+EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop" "gthumb")
 
 # Flags
 FULL_ENV=true
