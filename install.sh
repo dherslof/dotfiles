@@ -139,8 +139,8 @@ program_installed()
          echo "fetching..."
          sudo apt install $1
          apt_result=`$?`
-         if [ ! apt_result == 0 ]; then
-            error_print "Failed to install: $1"
+         if [ ! "${apt_result}" == 0 ]; then
+            error_print "Apt returned none 0 exit code when tried to install: $1"
             return
          fi
          local verify=`which $1`
@@ -345,26 +345,28 @@ setup_zsh()
 # Main
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-verify_prerequisites
-
 while getopts 'hVvtczpe' OPT; do
    case $OPT in
       v)
+         verify_prerequisites
          FULL_ENV=false
          setup_vim
          ;;
 
       t)
+         verify_prerequisites
          FULL_ENV=false
          setup_tmux
          ;;
 
       c)
+         verify_prerequisites
          FULL_ENV=false
          setup_cargo "${CARGO_TOOLS_LIST[@]}"
          ;;
 
       z)
+         verify_prerequisites
          FULL_ENV=false
          setup_zsh
          ;;
@@ -374,6 +376,7 @@ while getopts 'hVvtczpe' OPT; do
          apt_install "${PREREQUISITES[@]}"
          ;;
       e)
+         verify_prerequisites
          FULL_ENV=false
          apt_install "${EXTRA_LIST[@]}"
          ;;
@@ -407,6 +410,7 @@ fi
 read -p "You are about to run a full environment setup, continue? [Y/n]: " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]] || [ -z $REPLY ]; then
    echo " "
+   verify_prerequisites
    success_print "Setting upp environment!"
    setup_vim
    setup_tmux
