@@ -2,7 +2,7 @@
 
 autoload -Uz promptinit
 promptinit
-prompt adam1
+#prompt adam1
 
 setopt histignorealldups sharehistory
 
@@ -42,9 +42,6 @@ eval "$(starship init zsh)"
 # gt (goto) indexed directories
 eval "$(goto-rs init)"
 
-# Alias for 'thefuck helper tool 
-eval "$(thefuck --alias tfk)"
-
 # Alias for exa (replacement for ls)
 alias lf='exa -alF'
 alias lft='exa -alFT'
@@ -52,13 +49,13 @@ alias lft='exa -alFT'
 # Alias for listing amount of files in dir
 alias af='lf | wc -l'
 
-# add default color output for grep
+# Add default color output for grep
 alias grep='grep --color=always'
 
-#add default color + side-by-side comparison for diff
+# Add default color + side-by-side comparison for diff
 alias diff='diff --colow=always -y'
 
-# function for using du, (see used space for explicit folder)
+# Function for using du, (see used space for explicit folder)
 uspace() {
    du -h -d1  --time $1
 }
@@ -75,4 +72,7 @@ gb() {
    eval $cmd
    pwd
 }
+
+# Vivid color theme for improved output
+export LS_COLORS="$(vivid -m 8-bit generate snazzy)"
 

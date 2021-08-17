@@ -27,8 +27,8 @@ CONFIG_PATH=".config/"
 VIM="vim"
 TMUX="tmux"
 ZSH="zsh"
-CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli")
-PREREQUISITES=("curl" "git" "clang" "pkg-config")
+CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli" "vivid")
+PREREQUISITES=("curl" "git" "clang" "pkg-config" "libssl-dev")
 EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop" "gthumb")
 
 # Flags
@@ -41,7 +41,6 @@ YELLOW="\e[93m"
 NC='\e[0m'
 
 #TODO: add pip install func (pip3 install --user advance-touch)
-##                          (sudo pip3 install thefuck)
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Support functions
