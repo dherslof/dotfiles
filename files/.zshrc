@@ -53,7 +53,7 @@ alias af='lf | wc -l'
 alias grep='grep --color=always'
 
 # Add default color + side-by-side comparison for diff
-alias diff='diff --colow=always -y'
+alias diff='diff --color=always -y'
 
 # Function for using du, (see used space for explicit folder)
 uspace() {
