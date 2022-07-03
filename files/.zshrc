@@ -42,6 +42,9 @@ eval "$(starship init zsh)"
 # gt (goto) indexed directories
 eval "$(goto-rs init)"
 
+#mcfly reverse search engine (ctrl + R)
+eval "$(mcfly init zsh)"
+
 # Alias for exa (replacement for ls)
 alias lf='exa -alF'
 alias lft='exa -alFT'
