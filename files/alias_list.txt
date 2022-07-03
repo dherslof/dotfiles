@@ -1,0 +1,1 @@
+# Personal list of shell alias. If use of a function, wrap the function call in a alias in order for it to be displayed in '$ alias'
