@@ -79,3 +79,16 @@ gb() {
 # Vivid color theme for improved output
 export LS_COLORS="$(vivid -m 8-bit generate snazzy)"
 
+source_personal_alias() {
+   local alias_file_name="alias_list.txt"
+   local dotfiles_repo_file_path=`readlink -f .zshrc | rev | cut -d"." -f2-  | rev`
+   local personal_alias="${dotfiles_repo_file_path}${alias_file_name}"
+   
+   echo "Sourcing personal alias from list..."
+   if [ -f "${personal_alias}" ]; then  
+      source "${personal_alias}"
+   else 
+         echo "Unable to source personal alias, '${personal_alias}' doesn't exist"
+   fi
+   echo "...Done!"
+}
