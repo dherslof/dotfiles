@@ -11,6 +11,8 @@ Repository for keeping track of some of my personal ([@dherslof](https://github.
 * tmux config
 * cargo tools list
 * zsh
+* Personal shell alias list
+* [powerline](https://github.com/powerline/powerline) setup
 
 ### Installation and usage
 Clone the repository.
@@ -37,6 +39,4 @@ $ ./install.sh -h
 In alternative to run the above installation script, is to  manually move/link the dotfiles directly from the `files` directory.
 
 ### Todos
-In the future, it would be nice to add some more features in install script! (Today this needs to be done manually)
-* [powerline](https://github.com/powerline/powerline)
-
+Todo list:
