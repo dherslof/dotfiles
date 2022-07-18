@@ -1,1 +1,10 @@
 # Personal list of shell alias. If use of a function, wrap the function call in a alias in order for it to be displayed in '$ alias'
+
+# Display current week
+alias cweek='date +%U'
+
+# Find in dir
+alias is_here='lf | grep $1'
+
+# fd search with tree git structure
+alias fd='fd -I'
