@@ -55,21 +55,17 @@ alias af='lf | wc -l'
 # Add default color output for grep
 alias grep='grep --color=always'
 
-# Add default color + side-by-side comparison for diff (using difftastic instead)
+# Add default color + side-by-side comparison for diff
+# See personal alias file for alias with difftastic
 #alias diff='diff --color=always -y'
-
-# Function for using du, (see used space for explicit folder)
-uspace() {
-   du -h -d1  --time $1
-}
 
 # Function for moving up through directories
 gb() {
    cmd="cd "
-   if [ -z $1 ]; then 
-      return 
+   if [ -z $1 ]; then
+      return
    fi
-   for (( c=0; c<$1; c++ )) do 
+   for (( c=0; c<$1; c++ )) do
       cmd=$cmd"../"
    done
    eval $cmd
@@ -84,11 +80,11 @@ source_personal_alias() {
    local alias_file_name="alias_list.txt"
    local dotfiles_repo_file_path=`readlink -f .zshrc | rev | cut -d"." -f2-  | rev`
    local personal_alias="${dotfiles_repo_file_path}${alias_file_name}"
-   
+
    echo "Sourcing personal alias from list..."
-   if [ -f "${personal_alias}" ]; then  
+   if [ -f "${personal_alias}" ]; then
       source "${personal_alias}"
-   else 
+   else
          echo "Unable to source personal alias, '${personal_alias}' doesn't exist"
    fi
    cd - > /dev/null 2>&1

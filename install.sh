@@ -27,7 +27,7 @@ CONFIG_PATH=".config/"
 VIM="vim"
 TMUX="tmux"
 ZSH="zsh"
-CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli" "vivid" "mcfly" "difftastic" "sd" "xcp")
+CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli" "vivid" "mcfly" "difftastic" "sd" "xcp" "erdtree")
 PREREQUISITES=("curl" "git" "clang" "pkg-config" "libssl-dev")
 EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop" "gthumb")
 
