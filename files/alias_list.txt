@@ -8,3 +8,9 @@ alias is_here='lf | grep $1'
 
 # fd search with tree git structure
 alias fd='fd -I'
+
+# xcp - https://github.com/tarka/xcp
+alias cp='xcp'
+
+# difftastic - https://github.com/Wilfred/difftastic
+alias diff='difft'

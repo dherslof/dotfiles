@@ -55,8 +55,8 @@ alias af='lf | wc -l'
 # Add default color output for grep
 alias grep='grep --color=always'
 
-# Add default color + side-by-side comparison for diff
-alias diff='diff --color=always -y'
+# Add default color + side-by-side comparison for diff (using difftastic instead)
+#alias diff='diff --color=always -y'
 
 # Function for using du, (see used space for explicit folder)
 uspace() {
@@ -80,6 +80,7 @@ gb() {
 export LS_COLORS="$(vivid -m 8-bit generate snazzy)"
 
 source_personal_alias() {
+   cd /home/$USER > /dev/null 2>&1
    local alias_file_name="alias_list.txt"
    local dotfiles_repo_file_path=`readlink -f .zshrc | rev | cut -d"." -f2-  | rev`
    local personal_alias="${dotfiles_repo_file_path}${alias_file_name}"
@@ -90,5 +91,6 @@ source_personal_alias() {
    else 
          echo "Unable to source personal alias, '${personal_alias}' doesn't exist"
    fi
+   cd - > /dev/null 2>&1
    echo "...Done!"
 }
