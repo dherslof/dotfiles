@@ -14,3 +14,19 @@ alias cp='xcp'
 
 # difftastic - https://github.com/Wilfred/difftastic
 alias diff='difft'
+
+# Create and go
+alias cao='mkdir $1 && cd $1'
+
+# Improved tree - https://github.com/solidiquis/erdtree
+alias tree='et'
+
+# update rust
+alias rust_update='echo "Updating rust with: rustup update" && rustup update'
+
+# Detailed code language info
+alias detailed_code_lang_info='tokei'
+
+# alias for using du, (see used space for explicit folder)
+alias uspace='du -h -d1 --time $1'
+
