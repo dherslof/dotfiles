@@ -24,9 +24,44 @@ alias tree='et'
 # update rust
 alias rust_update='echo "Updating rust with: rustup update" && rustup update'
 
-# Detailed code language info
+# Detailed code language info - https://github.com/XAMPPRocky/tokei
 alias detailed_code_lang_info='tokei'
 
 # alias for using du, (see used space for explicit folder)
 alias uspace='du -h -d1 --time $1'
 
+# Hex conversion - https://github.com/gavynriebau/hex2ascii
+alias 2Ascii='echo $1 | hex2ascii'
+alias 2Hex='echo $1 | hex2ascii -r'
+
+# Wrapper around str_comparison func to get it in alias list
+alias str_comparison='compare_2_strings $1 $2'
+
+compare_2_strings() {
+   local str_1=$1
+   local str_2=$2
+   local green='\e[32m'
+   local nc='\e[0m'
+
+   # Verify input strings
+   if [ -z str_1 ]; then
+      echo "Need a string to compare"
+      exit
+   fi
+
+   if [ -z str_2 ]; then
+      echo "Nothing to compare ${str_1} with..."
+      exit
+   fi
+
+   # Check diff pos-by-pos
+   local str_len=${#str_1}
+   for n in {1..$str_len}; do
+      if [[ ${str_1:0:$n} != ${str_2:0:$n} ]]; then
+         let last=$n-1
+         echo "Found diff in string at pos $n:\n$str_1\n$green${str_1:0:$last}$nc\n$str_2"
+         # Break at diff
+         break
+      fi
+   done
+}
