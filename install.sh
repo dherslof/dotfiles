@@ -27,9 +27,9 @@ CONFIG_PATH=".config/"
 VIM="vim"
 TMUX="tmux"
 ZSH="zsh"
-CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli" "vivid" "mcfly" "difftastic" "sd" "xcp" "erdtree" "hex2ascii")
+CARGO_TOOLS_LIST=("fd-find" "ripgrep" "bat" "exa" "hyperfine" "hexyl" "tokei" "goto-rs" "starship" "dua-cli" "vivid" "mcfly" "difftastic" "sd" "xcp" "erdtree" "hex2ascii" "rustlings" "git-journal" "hurl" "jsonformat-cli")
 PREREQUISITES=("curl" "git" "clang" "pkg-config" "libssl-dev")
-EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop" "gthumb")
+EXTRA_LIST=("make" "cmake" "shellcheck" "feh" "pycodestyle" "gitk" "minicom" "progress" "htop" "gthumb" "vim-youcompleteme")
 
 # Flags
 FULL_ENV=true
@@ -233,6 +233,7 @@ setup_vim()
    fi
 
    success_print "Vim setup done! Launch VIM and run ':PluginInstall' to fetch plugins!"
+   note_print "'YouCompleteMe' has to be installed with apt, install it by running this script with '-e' flag. After successful installation, add it by: $ vim-addon-manager install youcompleteme"
 }
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

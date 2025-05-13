@@ -91,7 +91,8 @@ fi
 # Install powerline if not existing
 pwr_line_installed=$(which powerline)
 if [ -z "$pwr_line_installed" ]; then 
-   sudo pip3 install git+git://github.com/Lokaltog/powerline || { error_print "Failed to pip install powerline, aborting..."; exit;}
+   #sudo pip3 install git+git://github.com/Lokaltog/powerline || { error_print "Failed to pip install powerline, aborting..."; exit;}
+   sudo pip3 install powerline-status || { error_print "Failed to pip install powerline, aborting..."; exit; }
 fi
 
 while read line; do # Show status of powerline in order to get the path
