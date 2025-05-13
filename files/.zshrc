@@ -55,6 +55,10 @@ alias af='lf | wc -l'
 # Add default color output for grep
 alias grep='grep --color=always'
 
+# Search everything for grep and find
+alias fd='fd -I'
+alias rg='rg -uuu'
+
 # Add default color + side-by-side comparison for diff
 # See personal alias file for alias with difftastic
 #alias diff='diff --color=always -y'

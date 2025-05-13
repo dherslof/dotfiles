@@ -1,7 +1,7 @@
 # Personal list of shell alias. If use of a function, wrap the function call in a alias in order for it to be displayed in '$ alias'
 
 # Display current week
-alias cweek='date +%U'
+alias cweek='date +%V'
 
 # Find in dir
 alias is_here='lf | grep $1'
@@ -37,6 +37,21 @@ alias 2Hex='echo $1 | hex2ascii -r'
 # Wrapper around str_comparison func to get it in alias list
 alias str_comparison='compare_2_strings $1 $2'
 
+# Check for merge conflict files
+alias list_merge_conflicts='git diff --name-only --diff-filter=U --relative'
+
+# Simple way to get the absolute path of a directory
+alias get_dir_abs_path='realpath -s $1'
+
+# Get OS info
+alias display_os_info='lsb_release -a'
+
+# Char count in a string
+alias char_count_in_str='count words $1'
+
+# Colors in IP output
+alias ip='ip --color'
+
 compare_2_strings() {
    local str_1=$1
    local str_2=$2
@@ -64,4 +79,8 @@ compare_2_strings() {
          break
       fi
    done
+}
+
+count_words() {
+   echo -n "$1" | wc -c
 }
