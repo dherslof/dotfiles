@@ -19,7 +19,7 @@ alias diff='difft'
 alias cao='mkdir $1 && cd $1'
 
 # Improved tree - https://github.com/solidiquis/erdtree
-alias tree='et'
+alias tree='erd --hidden --unit si --human -y inverted'
 
 # update rust
 alias rust_update='echo "Updating rust with: rustup update" && rustup update'
